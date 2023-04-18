@@ -16,53 +16,40 @@ import java.util.List;
 @AllArgsConstructor
 public class TaiKhoanDto {
     private String name;
-
-    // email không được trùng nhau
     private String email;
-
     private String password;
-
     private String dienThoai;
-
     private List<String> roles = new ArrayList<>();
+
+    public TaiKhoanDto() {
+    }
+
+    public TaiKhoanDto(String name, String email, String password, String dienThoai, List<String> roles) {
+        this.name = name;
+        this.email = email;
+        this.password = password;
+        this.dienThoai = dienThoai;
+        this.roles = roles;
+    }
 
     public String getName() {
         return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getPassword() {
         return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getDienThoai() {
         return dienThoai;
     }
 
-    public void setDienThoai(String dienThoai) {
-        this.dienThoai = dienThoai;
-    }
-
     public List<String> getRoles() {
         return roles;
     }
-
-    public void setRoles(List<String> roles) {
-        this.roles = roles;
-    }
 }
+

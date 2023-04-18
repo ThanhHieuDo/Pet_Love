@@ -17,21 +17,17 @@ import java.util.Optional;
 @RequestMapping("/api/user")
 public class TaiKhoanController {
 
-    @Autowired
-    private TaiKhoanService taiKhoanService;
+    private final TaiKhoanService taiKhoanService;
+    private final TaiKhoanRepository taiKhoanRepository;
 
     @Autowired
-    private TaiKhoanRepository taiKhoanRepository;
+    public TaiKhoanController(TaiKhoanService taiKhoanService, TaiKhoanRepository taiKhoanRepository) {
+        this.taiKhoanService = taiKhoanService;
+        this.taiKhoanRepository = taiKhoanRepository;
+    }
 
     @PostMapping("/insert")
     public ResponseEntity<ResponseObject> insert(@RequestBody TaiKhoanDto dto) {
-
-        TaiKhoan taikhoan = new TaiKhoan();
-        taikhoan.setName(dto.getName());
-        taikhoan.setEmail(dto.getEmail());
-        taikhoan.setDienThoai(dto.getDienThoai());
-        taikhoan.setPassword(dto.getPassword());
-        taikhoan.setRoles(dto.getRoles());
 
         List<TaiKhoan> foundUsers = taiKhoanRepository.findByemail(dto.getEmail().trim());
 
@@ -41,27 +37,33 @@ public class TaiKhoanController {
             );
         }
 
+        TaiKhoan taikhoan = new TaiKhoan();
+        taikhoan.setName(dto.getName());
+        taikhoan.setEmail(dto.getEmail());
+        taikhoan.setDienThoai(dto.getDienThoai());
+        taikhoan.setPassword(dto.getPassword());
+        taikhoan.setRoles(dto.getRoles());
+        taiKhoanRepository.save(taikhoan);
 
         return ResponseEntity.status(HttpStatus.OK).body(
-               new ResponseObject("oke", "them thanh cong", taiKhoanRepository.save(taikhoan)));
+                new ResponseObject("oke", "them thanh cong", taikhoan));
     }
+
     @GetMapping("/all")
-    List<TaiKhoan> getAllProducts() {
+    public List<TaiKhoan> getAllProducts() {
         return taiKhoanRepository.findAll();
     }
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<ResponseObject> findById(@PathVariable String id) {
-
         Optional<TaiKhoan> taiKhoan = taiKhoanService.findById(id);
 
         return ResponseEntity.status(HttpStatus.OK).body(
                 new ResponseObject("oke", "tim kiem oke", taiKhoan));
-
     }
 
     @PutMapping("/{id}")
-    ResponseEntity<ResponseObject> updateUser(@RequestBody TaiKhoan newTaiKhoan, @PathVariable String id) {
+    public ResponseEntity<ResponseObject> updateUser(@RequestBody TaiKhoan newTaiKhoan, @PathVariable String id) {
         TaiKhoan updatedProduct = taiKhoanRepository.findById(id)
                 .map(taiKhoan -> {
                     taiKhoan.setDienThoai(newTaiKhoan.getDienThoai());
@@ -75,21 +77,19 @@ public class TaiKhoanController {
                     return taiKhoanRepository.save(newTaiKhoan);
                 });
         return ResponseEntity.status(HttpStatus.OK).body(
-                new ResponseObject("ok", "Update user successfully", updatedProduct)
-        );
+                new ResponseObject("ok", "Update user successfully", updatedProduct));
     }
 
     @DeleteMapping("/{id}")
-    ResponseEntity<ResponseObject> deleteProduct(@PathVariable String id) {
-        boolean exists = taiKhoanRepository.existsById(id);
-        if(exists) {
+    public ResponseEntity<ResponseObject> deleteProduct(@PathVariable String id) {
+        if (taiKhoanRepository.existsById(id)) {
             taiKhoanRepository.deleteById(id);
             return ResponseEntity.status(HttpStatus.OK).body(
-                    new ResponseObject("ok", "Delete user successfully", "")
-            );
+                    new ResponseObject("ok", "Delete user successfully", ""));
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
+                    new ResponseObject("failed", "Cannot find product to delete", ""));
         }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
-                new ResponseObject("failed", "Cannot find product to delete", "")
-        );
     }
 }
+

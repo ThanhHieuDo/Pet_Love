@@ -16,7 +16,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,59 +23,57 @@ import java.util.TimeZone;
 
 @SpringBootApplication
 public class MyPetApplication implements CommandLineRunner {
-	@Autowired
-	private TaiKhoanRepository taiKhoanRepository;
+    @Autowired
+    private TaiKhoanRepository taiKhoanRepository;
 
-	@Autowired
-	private DichVuRepository dichVuRepository;
+    @Autowired
+    private DichVuRepository dichVuRepository;
 
-	@Autowired
-	private LoaiThuCungRepository loaiThuCungRepository;
+    @Autowired
+    private LoaiThuCungRepository loaiThuCungRepository;
 
+    @Autowired
+    private DatChoRepository datChoRepository;
 
-	@Autowired
-	private DatChoRepository datChoRepository;
+    public static void main(String[] args) {
+        SpringApplication.run(MyPetApplication.class, args);
+    }
 
-	public static void main(String[] args) {
-		SpringApplication.run(MyPetApplication.class, args);
-	}
-	@Override
-	public void run(String... args) throws Exception {
-		if(taiKhoanRepository.count()==0){
+    @Override
+    public void run(String... args) throws Exception {
+        initDataIfEmpty();
+    }
 
-			TaiKhoan taiKhoan = new TaiKhoan("dien", "dien@gmail.com", "23412", "0907722382",true);
+    private void initDataIfEmpty() throws Exception {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
 
-			taiKhoanRepository.save(taiKhoan);
-		}
-		if(dichVuRepository.count() == 0)
-		{
-			GiaDichVu giaDichVu = new GiaDichVu("Cho", 45.3, 500000.5);
-			List<GiaDichVu> ls = new ArrayList<>();
-			ls.add(giaDichVu);
-			DichVu dichVu = new DichVu("ma1", "Tam thu", "Tam cho, meo,...", ls);
+        if (taiKhoanRepository.count() == 0) {
+            TaiKhoan taiKhoan = new TaiKhoan("hieu", "hieu@gmail.com", "160801", "0922336932", true);
+            taiKhoanRepository.save(taiKhoan);
+        }
 
-			dichVuRepository.save(dichVu);
-		}
-		if(loaiThuCungRepository.count() == 0)
-		{
-			LoaiThuCung loaiThuCung = new LoaiThuCung("mathucung1", "Loai Nho Con");
+        if (dichVuRepository.count() == 0) {
+            GiaDichVu giaDichVu = new GiaDichVu("Cho", 35.3, 100000.2);
+            List<GiaDichVu> giaDichVuList = new ArrayList<>();
+            giaDichVuList.add(giaDichVu);
+            DichVu dichVu = new DichVu("ma1", "Tam thu", "Tam cho, meo,...", giaDichVuList);
+            dichVuRepository.save(dichVu);
+        }
 
-			loaiThuCungRepository.save(loaiThuCung);
-		}
-		if(datChoRepository.count() == 0)
-		{
-			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-			sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
+        if (loaiThuCungRepository.count() == 0) {
+            LoaiThuCung loaiThuCung = new LoaiThuCung("mathucung1", "Loai Nho Con");
+            loaiThuCungRepository.save(loaiThuCung);
+        }
 
-			ThongTinDatCho thongtin1 = new ThongTinDatCho("tam meo", "1250000");
-			ThongTinDatCho thongtin2 = new ThongTinDatCho("tam cho", "1200000");
-
-			List<ThongTinDatCho> ls = new ArrayList<>();
-			ls.add(thongtin1);
-			ls.add(thongtin2);
-			DatCho datCho = new DatCho("thanhdien@gmail.com", ls, sdf.parse("21/03/2023"), "tam ky nha","DAT_CHO");
-
-			datChoRepository.save(datCho);
-		}
-	}
+        if (datChoRepository.count() == 0) {
+            ThongTinDatCho thongtin1 = new ThongTinDatCho("tam meo", "250000");
+            ThongTinDatCho thongtin2 = new ThongTinDatCho("tam cho", "220000");
+            List<ThongTinDatCho> thongTinDatChoList = new ArrayList<>();
+            thongTinDatChoList.add(thongtin1);
+            thongTinDatChoList.add(thongtin2);
+            DatCho datCho = new DatCho("suttycr7@gmail.com", thongTinDatChoList, EnumTrangThaiDatCho.DA_DAT);
+            datChoRepository.save(datCho);
+        }
+    }
 }

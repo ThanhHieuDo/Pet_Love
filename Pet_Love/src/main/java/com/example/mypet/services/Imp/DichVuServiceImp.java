@@ -12,16 +12,20 @@ import java.util.Optional;
 @Service
 public class DichVuServiceImp implements DichVuService {
 
-    @Autowired
-    private DichVuRepository dichVuRepository;
-    @Override
-    public Optional<DichVu> findById(String Id) {
+    private final DichVuRepository dichVuRepository;
 
-        return dichVuRepository.findById(Id);
+    @Autowired
+    public DichVuServiceImp(DichVuRepository dichVuRepository) {
+        this.dichVuRepository = dichVuRepository;
+    }
+
+    @Override
+    public Optional<DichVu> findById(String id) {
+        return dichVuRepository.findById(id);
     }
 
     @Override
     public List<DichVu> findAll() {
-        return null;
+        return dichVuRepository.findAll();
     }
 }

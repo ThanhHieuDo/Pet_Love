@@ -1,6 +1,5 @@
 package com.example.mypet.services.Imp;
 
-
 import com.example.mypet.entities.TaiKhoan;
 import com.example.mypet.repositories.TaiKhoanRepository;
 import com.example.mypet.services.TaiKhoanService;
@@ -13,22 +12,25 @@ import java.util.Optional;
 @Service
 public class TaiKhoanServiceIml implements TaiKhoanService {
 
+    private final TaiKhoanRepository taiKhoanRepository;
+
     @Autowired
-    private TaiKhoanRepository taiKhoanRepository;
+    public TaiKhoanServiceIml(TaiKhoanRepository taiKhoanRepository) {
+        this.taiKhoanRepository = taiKhoanRepository;
+    }
 
     @Override
     public TaiKhoan insert(TaiKhoan taiKhoan) {
-
         return taiKhoanRepository.insert(taiKhoan);
     }
+
     @Override
     public List<TaiKhoan> findAll() {
         return taiKhoanRepository.findAll();
     }
 
     @Override
-    public Optional<TaiKhoan> findById(String Id) {
-
-        return taiKhoanRepository.findById(Id);
+    public Optional<TaiKhoan> findById(String id) {
+        return taiKhoanRepository.findById(id);
     }
 }

@@ -28,10 +28,40 @@ public class LoaiThuCung {
 
     private String tenLoaiThuCung;
 
-    public LoaiThuCung(String maLoaiThuCung, String tenLoaiThuCung) {
-        this.maLoaiThuCung = maLoaiThuCung;
-        this.tenLoaiThuCung = tenLoaiThuCung;
-    }
+    public class LoaiThuCung {
 
-    private boolean trangThai = true;
+        private String maLoaiThuCung;
+        private String tenLoaiThuCung;
+        private boolean trangThai = true;
+    
+        public LoaiThuCung(String maLoaiThuCung, String tenLoaiThuCung) {
+            this.maLoaiThuCung = maLoaiThuCung;
+            this.tenLoaiThuCung = tenLoaiThuCung;
+        }
+    
+        public String getMaLoaiThuCung() {
+            return maLoaiThuCung;
+        }
+    
+        public void setMaLoaiThuCung(String maLoaiThuCung) {
+            this.maLoaiThuCung = maLoaiThuCung;
+        }
+    
+        public String getTenLoaiThuCung() {
+            return tenLoaiThuCung;
+        }
+    
+        public void setTenLoaiThuCung(String tenLoaiThuCung) {
+            this.tenLoaiThuCung = tenLoaiThuCung;
+        }
+    
+        public boolean isTrangThai() {
+            return trangThai;
+        }
+    
+        public void setTrangThai(boolean trangThai) {
+            this.trangThai = trangThai;
+        }
+    }
+    
 }

@@ -37,23 +37,37 @@ public class TaiKhoan {
 
     private String dienThoai;
 
-    private List<String> roles = new ArrayList<>();
-
-    public TaiKhoan(String name, String email, String password, String dienThoai, boolean trangThai) {
-        this.name = name;
-        this.email = email;
-        this.password = password;
-        this.dienThoai = dienThoai;
-        this.trangThai = trangThai;
+    public class TaiKhoan {
+        private String name;
+        private String email;
+        private String password;
+        private String dienThoai;
+        private boolean trangThai = true;
+        private List<String> roles = new ArrayList<>();
+    
+        public TaiKhoan(String name, String email, String password, String dienThoai, boolean trangThai) {
+            this.name = name;
+            this.email = email;
+            this.password = password;
+            this.dienThoai = dienThoai;
+            this.trangThai = trangThai;
+        }
+    
+        public boolean isTrangThai() {
+            return trangThai;
+        }
+    
+        public void setTrangThai(boolean trangThai) {
+            this.trangThai = trangThai;
+        }
+    
+        public List<String> getRoles() {
+            return roles;
+        }
+    
+        public void setRoles(List<String> roles) {
+            this.roles = roles;
+        }
     }
-
-    private boolean trangThai = true;
-
-    public boolean isTrangThai() {
-        return trangThai;
-    }
-
-    public void setTrangThai(boolean trangThai) {
-        this.trangThai = trangThai;
-    }
+    
 }

@@ -1,6 +1,5 @@
 package com.example.mypet.services.Imp;
 
-import com.example.mypet.entities.DichVu;
 import com.example.mypet.entities.LoaiThuCung;
 import com.example.mypet.repositories.LoaiThuCungRepository;
 import com.example.mypet.services.LoaiThuCungService;
@@ -13,17 +12,20 @@ import java.util.Optional;
 @Service
 public class LoaiThuCungServiceImp implements LoaiThuCungService {
 
-    @Autowired
-    private LoaiThuCungRepository loaiThuCungRepository;
+    private final LoaiThuCungRepository loaiThuCungRepository;
 
-    @Override
-    public List<LoaiThuCung> findAll() {
-        return null;
+    @Autowired
+    public LoaiThuCungServiceImp(LoaiThuCungRepository loaiThuCungRepository) {
+        this.loaiThuCungRepository = loaiThuCungRepository;
     }
 
     @Override
-    public Optional<LoaiThuCung> findById(String Id) {
+    public List<LoaiThuCung> findAll() {
+        return loaiThuCungRepository.findAll();
+    }
 
-        return loaiThuCungRepository.findById(Id);
+    @Override
+    public Optional<LoaiThuCung> findById(String id) {
+        return loaiThuCungRepository.findById(id);
     }
 }

@@ -18,20 +18,51 @@ import java.util.List;
 public class DatChoDto {
     @Id
     private String id;
-
-    // email người đặt chỗ
     private String email;
-
     private List<ThongTinDatCho> thongTinDatChos = new ArrayList<>();
-
-    // Thời gian chăm sóc thú cưng
     private Date thoiGian;
-
-    // căn dặn khi chăm sóc thú cưng
     private String canDan;
-
-    // lấy từ enum trạng thái đặt chỗ
     private String trangThaiDatCho;
-
     private boolean trangThai = true;
+
+    public DatChoDto() {
+    }
+
+    public DatChoDto(String id, String email, List<ThongTinDatCho> thongTinDatChos, Date thoiGian, String canDan, String trangThaiDatCho, boolean trangThai) {
+        this.id = id;
+        this.email = email;
+        this.thongTinDatChos = thongTinDatChos;
+        this.thoiGian = thoiGian;
+        this.canDan = canDan;
+        this.trangThaiDatCho = trangThaiDatCho;
+        this.trangThai = trangThai;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public List<ThongTinDatCho> getThongTinDatChos() {
+        return thongTinDatChos;
+    }
+
+    public Date getThoiGian() {
+        return thoiGian;
+    }
+
+    public String getCanDan() {
+        return canDan;
+    }
+
+    public String getTrangThaiDatCho() {
+        return trangThaiDatCho;
+    }
+
+    public boolean isTrangThai() {
+        return trangThai;
+    }
 }
